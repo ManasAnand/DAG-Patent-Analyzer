@@ -3,9 +3,9 @@
 
 ### Communication
 1. **Team Meetings** Our team will meet once a week every Thursdays from 5-7 PM using Discord.
-   Each member will rotate being the designated note-taker, starting with Rittika. Notes
+   Each member will rotate being the designated note-taker, starting with Monica. Notes
    will be stored on a Google document, time-stamped for each meeting.
-2. **Assistance** Each team member can be contacted through email ({your netid, your netid}@illinois.edu), 
+2. **Assistance** Each team member can be contacted through email ({taran4, mpara3, manas3, anakin2}@illinois.edu), 
    or Discord Outside of emergencies or other commitments, we commit to responding to emails within
    48 hours.
 3. **Respect** The note-taker for the week will also serve as the "project lead" for the weekly meeting.
@@ -26,6 +26,6 @@
 
 ### Signatures
 I, Anakin Dey (anakind2) agree to the terms of this contract. <br>
-I, your name (netid) agree to the terms of this contract <br>
+I, Monica Para (mpara3) agree to the terms of this contract <br>
 I, your name (netid) agree to the terms of this contract. <br>
 I, your name (netid) agree to the terms of this contract. <br>
