@@ -28,4 +28,4 @@
 I, Anakin Dey (anakind2) agree to the terms of this contract. <br>
 I, Monica Para (mpara3) agree to the terms of this contract <br>
 I, your name (netid) agree to the terms of this contract. <br>
-I, your name (netid) agree to the terms of this contract. <br>
+I, Manas Anand (manasa3) agree to the terms of this contract. <br>
