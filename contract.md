@@ -25,7 +25,7 @@
    Destination 3 stock no items. The winner will decide who was right and who was wrong. (Might makes right.)
 
 ### Signatures
-I, your name (netid) agree to the terms of this contract. <br>
+I, Anakin Dey (anakind2) agree to the terms of this contract. <br>
 I, your name (netid) agree to the terms of this contract <br>
 I, your name (netid) agree to the terms of this contract. <br>
 I, your name (netid) agree to the terms of this contract. <br>
