@@ -1,5 +1,5 @@
 # CS 225 Data Structures
-## Team Contract (rittika2-gcevans-xz33-atharva2)
+## Team Contract (taran4-mpara3-manasa3-anakind2)
 
 ### Communication
 1. **Team Meetings** Our team will meet once a week every Thursdays from 5-7 PM using Discord.
@@ -25,7 +25,7 @@
    Destination 3 stock no items. The winner will decide who was right and who was wrong. (Might makes right.)
 
 ### Signatures
-I, your name (netid) agree to the terms of this contract.
-I, your name (netid) agree to the terms of this cont
-I, your name (netid) agree to the terms of this contract.
-I, your name (netid) agree to the terms of this contract.
+I, your name (netid) agree to the terms of this contract. <br>
+I, your name (netid) agree to the terms of this contract <br>
+I, your name (netid) agree to the terms of this contract. <br>
+I, your name (netid) agree to the terms of this contract. <br>
