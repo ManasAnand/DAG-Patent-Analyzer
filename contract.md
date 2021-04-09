@@ -27,5 +27,5 @@
 ### Signatures
 I, Anakin Dey (anakind2) agree to the terms of this contract. <br>
 I, Monica Para (mpara3) agree to the terms of this contract <br>
-I, Tara Natarajan (taranr) agree to the terms of this contract. <br>
+I, Tara Natarajan (taran4) agree to the terms of this contract. <br>
 I, your name (netid) agree to the terms of this contract. <br>
