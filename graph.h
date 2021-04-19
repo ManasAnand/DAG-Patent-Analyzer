@@ -3,15 +3,15 @@
 #include <unordered_map>
 #include <string>
 #include <iostream>
+
+#include "patent.h"
+
 using namespace std;
 
 class Graph {
     private: 
         struct Node {
-            unsigned int patent_id;
-            string inventor;
-            unsigned int year;
-
+            Patent* patent;
         };
 
         struct Edge {
@@ -20,7 +20,7 @@ class Graph {
             Node* citee;
         };
 
-        unordered_map<Node*, vector<Edge*>> map;
+        unordered_map<Node*, vector<Edge*>> adjList;
 
     public:
         //construct Graph
