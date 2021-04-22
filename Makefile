@@ -15,7 +15,7 @@ $(EXE) : output_msg $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(EXE)
 
 
-main.o : main.cpp graph.cpp outputs
+main.o : main.cpp graph.o outputs
 	$(CXX) $(CXXFLAGS) main.cpp 
 
 outputs:
@@ -24,7 +24,7 @@ outputs:
 #test : output_msg tests.o graph.o
 #    $(LD) tests.o graph.o $(LDFLAGS) -o test
 
-#tests.o : tests/tests.cpp tests/catch/catch.hpp algorithms.hpp
+#tests.o : tests/tests.cpp tests/catch/catch.hpp
 #    $(CXX) $(CXXFLAGS) tests/tests.cpp
 
 graph.o: graph.h graph.cpp
