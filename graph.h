@@ -1,41 +1,43 @@
 #pragma once
 
-#include <unordered_map>
+#include <map>
 #include <string>
 #include <iostream>
+#include <vector>
+#include <list>
+
 using namespace std;
 
 class Graph {
     private: 
-        struct Node {
-            unsigned int patent_id;
-            string inventor;
-            unsigned int year;
-
-        };
+        typedef int Node;
 
         struct Edge {
             //citer -> citee
-            Node* citer;
-            Node* citee;
+            Node citer;
+            Node citee;
+
+            
         };
 
-        unordered_map<Node*, vector<Edge*>> map;
+        map<Node, vector<Edge*>> adjList;
 
     public:
         //construct Graph
         Graph();
 
         //insertVertex
-        void insertNode(unsigned int id, string patent_inventor, unsigned int patent_year);
+        void insertNode(int id);
 
         //insertEdge
-        void insertEdge(Node* src, Node* dest);
+        void insertEdge(Node src, Node dest);
 
         //incidentEdges
-        vector<Edge*> incidentEdges(Node* input);
+        vector<Node> incidentEdges(Node src) const;
 
         //areAdjacent
-        bool areAdjacent(Node* src, Node* dest);
+        bool areAdjacent(Node src, Node dest);
+
+        void printGraph();
 
 };
