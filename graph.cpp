@@ -107,3 +107,19 @@ istream &operator>>(istream  &input, Graph &graph) {
 int Graph::GetGraph() {
     return adjList.size();
 }
+
+void Graph::DepthTraversal() {
+    map<int, bool> alr_visited;
+
+    for (auto i: adjList) {
+        if (alr_visited[i.first] == false) {
+            alr_visited[i.first] == true;
+            DepthTraversal(i.first);
+        }
+    }
+}
+
+void Graph::DepthTraversal(int node_val) {
+    cout << node_val << " ";
+
+}

@@ -20,6 +20,7 @@ class Graph {
             
         };
 
+        void DepthTraversal(int v);
         map<Node, vector<Edge*>> adjList;
 
     public:
@@ -41,6 +42,8 @@ class Graph {
         void printGraph();
 
         int GetGraph();
+
+        void DepthTraversal();
 
         friend istream &operator>>( istream  &input, Graph &graph);
 };
