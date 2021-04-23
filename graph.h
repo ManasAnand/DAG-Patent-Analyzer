@@ -40,4 +40,7 @@ class Graph {
 
         void printGraph();
 
+        int GetGraph();
+
+        friend istream &operator>>( istream  &input, Graph &graph);
 };

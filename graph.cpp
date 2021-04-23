@@ -1,6 +1,9 @@
 #include <map>
 #include <string>
 #include <iostream>
+#include <istream>
+#include <sstream>
+#include <fstream>
 #include <vector>
 
 #include "graph.h"
@@ -63,4 +66,44 @@ void Graph::printGraph() {
             cout << endl;
         }
     }
+}
+
+istream &operator>>(istream  &input, Graph &graph) {
+    string current;
+    getline(input, current);
+    while(current.at(0) == '#') {
+        getline(input, current);
+    }
+    string delimiter = " ";
+    
+    while(!input.eof()) {
+        int from;
+        int to;
+
+        string line;
+        getline(input, line);
+        size_t pos;
+        pos = line.find(delimiter);
+
+        string temp = line.substr(0, pos);
+        stringstream (temp) >> from;
+        line.erase(0, pos + delimiter.length());
+        temp = line.substr(0, pos);
+        stringstream (temp) >> to;
+
+        // add the patents as nodes here
+        // convert the ints to Nodes
+        // graph.insertEdge(node_from, node_to)
+
+        graph.insertNode(from);
+        graph.insertNode(to);
+
+        graph.insertEdge(from, to);
+    }
+    return input;
+
+}
+
+int Graph::GetGraph() {
+    return adjList.size();
 }

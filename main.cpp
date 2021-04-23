@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
-
+#include <istream>
+#include <fstream>
 #include "graph.h"
 
 using namespace std;
@@ -8,6 +9,9 @@ using namespace std;
 int main() {
     Graph g;
 
+    // ifstream file("data/cit-Patents.txt");
+    // file >> g;
+    // cout << g.GetGraph() << endl;
     g.insertNode(1);
     g.insertNode(2);
     g.insertEdge(1, 2);
@@ -23,8 +27,6 @@ int main() {
 
     g.insertNode(1);
     g.insertEdge(1, 5);
-
-    g.insertEdge(9999, 1);
 
     g.printGraph();
 
