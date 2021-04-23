@@ -35,5 +35,18 @@ int main() {
     for (size_t i = 0; i < incid.size(); i++) {
         cout << incid[i] << endl;
     }
+
+    if (g.areAdjacent(2, 3)) {
+        cout << "2 and 3 are adjacent" << endl;
+    } else {
+        cout << "2 and 3 are not adjacent" << endl;
+    }
+
+    if (g.areAdjacent(3, 2)) {
+        cout << "3 and 2 are adjacent" << endl;
+    } else {
+        cout << "3 and 2 are not adjacent" << endl;
+    }
+
     return 0;
 }

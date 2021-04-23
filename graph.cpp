@@ -57,6 +57,18 @@ vector<int> Graph::incidentEdges(Node src) const {
     return toReturn;
 }
 
+bool Graph::areAdjacent(Node src, Node dest) {
+    //.at throws exception if node(src) doesn't exist
+    vector<Edge*> edgeList = adjList.at(src);
+    for (auto e : edgeList) {
+        if (e -> citee  == dest) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void Graph::printGraph() {
     for (auto it = adjList.begin(); it != adjList.end(); ++it) {
         cout << "Edges at node " << it -> first << endl;

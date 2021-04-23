@@ -16,8 +16,6 @@ class Graph {
             //citer -> citee
             Node citer;
             Node citee;
-
-            
         };
 
         void DepthTraversal(int v);
