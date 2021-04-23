@@ -22,6 +22,7 @@ class Graph {
 
         void DepthTraversal(int v);
         map<Node, vector<Edge*>> adjList;
+        map<int, bool> alr_visited;
 
     public:
         //construct Graph

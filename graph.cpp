@@ -109,17 +109,21 @@ int Graph::GetGraph() {
 }
 
 void Graph::DepthTraversal() {
-    map<int, bool> alr_visited;
-
     for (auto i: adjList) {
-        if (alr_visited[i.first] == false) {
-            alr_visited[i.first] == true;
+        if (!alr_visited[i.first]) {
             DepthTraversal(i.first);
         }
     }
 }
 
 void Graph::DepthTraversal(int node_val) {
+    alr_visited[node_val] = true;
     cout << node_val << " ";
+
+    for (auto i: adjList[node_val]) {
+        if (!alr_visited[i->citee]) {
+            DepthTraversal(i->citee);
+        }
+    }
 
 }
