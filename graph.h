@@ -20,11 +20,14 @@ class Graph {
             
         };
 
+        void DepthTraversal(int v);
         map<Node, vector<Edge*>> adjList;
 
     public:
         //construct Graph
         Graph();
+
+        Graph(const string& path);
 
         //insertVertex
         void insertNode(int id);
@@ -40,6 +43,9 @@ class Graph {
 
         void printGraph();
 
-        friend istream &operator>>( istream  &input, Graph &graph);
+        int GetGraph();
 
+        void DepthTraversal();
+
+        friend istream &operator>>( istream  &input, Graph &graph);
 };

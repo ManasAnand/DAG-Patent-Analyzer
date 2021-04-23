@@ -34,3 +34,5 @@
 *.exe
 *.out
 *.app
+data/small_patents.txt
+data/cit-Patents.txt

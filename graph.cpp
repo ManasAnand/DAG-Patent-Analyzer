@@ -1,6 +1,9 @@
 #include <map>
 #include <string>
 #include <iostream>
+#include <istream>
+#include <sstream>
+#include <fstream>
 #include <vector>
 
 #include "graph.h"
@@ -12,6 +15,13 @@ using namespace std;
 Graph::Graph() {
     adjList = map<Node, vector<Edge*>>();
 }
+
+Graph::Graph(const string& path) {
+    adjList = map<Node, vector<Edge*>>();
+    ifstream file(path);
+    file >> *this;
+}
+
 
 void Graph::insertNode(int id) {
     //note that if a node already exists nothing will change
@@ -63,4 +73,60 @@ void Graph::printGraph() {
             cout << endl;
         }
     }
+}
+
+istream &operator>>(istream  &input, Graph &graph) {
+    string current;
+    getline(input, current);
+    while(current.at(0) == '#') {
+        getline(input, current);
+    }
+    string delimiter = " ";
+    
+    while(!input.eof()) {
+        int from;
+        int to;
+
+        string line;
+        getline(input, line);
+        size_t pos;
+        pos = line.find(delimiter);
+
+        string temp = line.substr(0, pos);
+        stringstream (temp) >> from;
+        line.erase(0, pos + delimiter.length());
+        temp = line.substr(0, pos);
+        stringstream (temp) >> to;
+
+        // add the patents as nodes here
+        // convert the ints to Nodes
+        // graph.insertEdge(node_from, node_to)
+
+        graph.insertNode(from);
+        graph.insertNode(to);
+
+        graph.insertEdge(from, to);
+    }
+    return input;
+
+}
+
+int Graph::GetGraph() {
+    return adjList.size();
+}
+
+void Graph::DepthTraversal() {
+    map<int, bool> alr_visited;
+
+    for (auto i: adjList) {
+        if (alr_visited[i.first] == false) {
+            alr_visited[i.first] == true;
+            DepthTraversal(i.first);
+        }
+    }
+}
+
+void Graph::DepthTraversal(int node_val) {
+    cout << node_val << " ";
+
 }
