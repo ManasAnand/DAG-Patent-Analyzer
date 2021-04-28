@@ -1,0 +1,9 @@
+# DEVELOPMENT LOG
+
+## WEEK 1 (APRIL 11 - 18)
+Our team met to discuss preliminary design decisions for the project. We started to develop the overall skeleton for the project framework such as the catch files, png classes, and our rough graph class skeleton for our implementation of one of our algorithms. Moving onto the second week of the project, our team will continue to build upon building the graph.cpp algorithm and reconfigure our makefile setup as we were not able to resolve the make file configurations yet. We hope to make continuing progress before our mentor check in meeting
+
+## WEEK 2 (APRIL 18 - 25)
+Going on as a continuation of last week's development, our team met to get the ``make`` files to work, parse our data from the Patents CSV Set and implemented some functions within our ``graph.cpp `` class. We set up some initial test cases in the ``main.cpp`` to see if our current implementation would compile. On Friday, April 23 we met with our project mentor to discuss our current state of the progress. While our mentor liked how the projection of the project was going, he gave us valuable feedback such as creating a separate testing suite for our test cases than opposed to putting everything in our ``main.cpp`` file. He also gave us some tips on our graph implementation algorithms that our team is taking into consideration for the next development cycle. For Week 3, we plan to continue working on our graph algorithms and migrate our current test cases to a ``tests`` folder we left blank initially as we thought we can test everything under ``main.cpp``. 
+
+## WEEK 3 (APRIL 25 - MAY 2)
