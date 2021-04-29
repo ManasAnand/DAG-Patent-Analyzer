@@ -40,9 +40,11 @@ class Graph {
 
         void printGraph();
 
-        int GetGraph();
+        int getNumNodes();
+        int getNumEdges();
 
         void DepthTraversal();
+        map<Node, vector<Edge*>> breadthTraversal(Node starting_point);
 
         friend istream &operator>>( istream  &input, Graph &graph);
 };

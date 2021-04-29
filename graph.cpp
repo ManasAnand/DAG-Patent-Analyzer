@@ -100,7 +100,7 @@ istream &operator>>(istream  &input, Graph &graph) {
         string temp = line.substr(0, pos);
         stringstream (temp) >> from;
         line.erase(0, pos + delimiter.length());
-        temp = line.substr(0, pos);
+        temp = line;
         stringstream (temp) >> to;
 
         // add the patents as nodes here
@@ -116,9 +116,19 @@ istream &operator>>(istream  &input, Graph &graph) {
 
 }
 
-int Graph::GetGraph() {
+int Graph::getNumNodes() {
     return adjList.size();
 }
+
+// int Graph::getNumEdges() {
+//     int count = 0;
+//     for (auto pair: adjList) {
+//         vector<int> current_edges = adjList(pair.first);
+//         count += current_edges;
+//     }
+
+//     return count;
+// }
 
 void Graph::DepthTraversal() {
     for (auto i: adjList) {
@@ -138,4 +148,34 @@ void Graph::DepthTraversal(int node_val) {
         }
     }
 
+}
+
+map<Node, vector<Edge*>> Graph::breadthTraversal(Node starting_point) {
+    map<Node, vector<Node>> previous;
+    map<Node, int> dist;
+    map<Node, vector<Node>> paths;
+    for(auto node: adjList) {
+        dist.insert({node.first, -1});
+    }
+    queue<Node> q;
+    q.push(starting_point);
+    while (!q.empty()) {
+        Node current = q.front();
+        q.dequeue();
+        vector<Edge*>>& adjs = adjList[current]; 
+
+        for (auto edge: adjs) {
+            Node connection = edge.citee;
+            if (dist[connection] == -1) {
+                dist[connection] = dist[current] + 1;
+                q.push(connection);
+            } else if (dist[connection] == dist[current] + 1) {
+                previous[connection].push_back(current);
+            }
+        }
+    }
+
+    for (auto dest: previous) {
+        
+    }
 }
