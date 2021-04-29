@@ -64,6 +64,18 @@ vector<int> Graph::incidentEdges(Node src) const {
     return toReturn;
 }
 
+bool Graph::areAdjacent(Node src, Node dest) {
+    //.at throws exception if node(src) doesn't exist
+    vector<Edge*> edgeList = adjList.at(src);
+    for (auto e : edgeList) {
+        if (e -> citee  == dest) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void Graph::printGraph() {
     for (auto it = adjList.begin(); it != adjList.end(); ++it) {
         cout << "Edges at node " << it -> first << endl;
@@ -112,21 +124,25 @@ istream &operator>>(istream  &input, Graph &graph) {
 }
 
 int Graph::GetGraph() {
-    return adjList.size();
+    return adjList;
 }
 
 void Graph::DepthTraversal() {
-    map<int, bool> alr_visited;
-
     for (auto i: adjList) {
-        if (alr_visited[i.first] == false) {
-            alr_visited[i.first] == true;
+        if (!alr_visited[i.first]) {
             DepthTraversal(i.first);
         }
     }
 }
 
 void Graph::DepthTraversal(int node_val) {
+    alr_visited[node_val] = true;
     cout << node_val << " ";
+
+    for (auto i: adjList[node_val]) {
+        if (!alr_visited[i->citee]) {
+            DepthTraversal(i->citee);
+        }
+    }
 
 }

@@ -16,12 +16,11 @@ class Graph {
             //citer -> citee
             Node citer;
             Node citee;
-
-            
         };
 
         void DepthTraversal(int v);
         map<Node, vector<Edge*>> adjList;
+        map<int, bool> alr_visited;
 
     public:
         //construct Graph
