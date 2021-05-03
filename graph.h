@@ -44,7 +44,7 @@ class Graph {
         int getNumEdges();
 
         void DepthTraversal();
-        map<Node, vector<Edge*>> breadthTraversal(Node starting_point);
+        map<Node, vector<Node>> breadthSearch(Node starting_point);
 
         friend istream &operator>>( istream  &input, Graph &graph);
 };

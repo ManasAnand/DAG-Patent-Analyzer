@@ -5,6 +5,7 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
+#include <queue>
 
 #include "graph.h"
 using namespace std;
@@ -150,22 +151,31 @@ void Graph::DepthTraversal(int node_val) {
 
 }
 
-map<Node, vector<Edge*>> Graph::breadthTraversal(Node starting_point) {
-    map<Node, vector<Node>> previous;
-    map<Node, int> dist;
-    map<Node, vector<Node>> paths;
+
+/* Breadth First Search implementation
+ * Heavily inspired by Brandes Algorithm for betweenness centrality
+ * Takes in a starting node and returns a map of ending nodes and the shortest path of nodes from the start to the end
+ */
+map<int, vector<int>> Graph::breadthSearch(Node starting_point) {
+    //map from node to nodes that lead to that node
+    map<int, vector<int>> previous;
+    //map from node to distance from starting node. Unvisited / start node = -1. Adjacent node = 0 distance
+    map<int, int> dist;
     for(auto node: adjList) {
         dist.insert({node.first, -1});
     }
+    //map from end node to path from start node to that end node
+    map<int, vector<int>> paths;
+    
     queue<Node> q;
     q.push(starting_point);
     while (!q.empty()) {
         Node current = q.front();
-        q.dequeue();
-        vector<Edge*>>& adjs = adjList[current]; 
+        q.pop();
+        vector<Edge*>& adjs = adjList[current]; 
 
         for (auto edge: adjs) {
-            Node connection = edge.citee;
+            Node connection = edge -> citee;
             if (dist[connection] == -1) {
                 dist[connection] = dist[current] + 1;
                 q.push(connection);
@@ -175,7 +185,26 @@ map<Node, vector<Edge*>> Graph::breadthTraversal(Node starting_point) {
         }
     }
 
-    for (auto dest: previous) {
-        
+    for(auto node: dist) {
+        //if node never visited or node is start, do nothing
+        if (node.second == -1) {
+            continue;
+        }
+        vector<int> toAdd;
+        Node currentNode(node.first);
+        int currentDist = node.second;
+        while (currentDist > -1) {
+            vector<int>& prevList = previous.at(currentNode);
+            for (auto & prevNode : prevList) {
+                if (dist[prevNode] == currentDist - 1) {
+                    toAdd.push_back(currentNode);
+                    currentDist--;
+                    currentNode = prevNode;
+                }
+            }
+        }
+        paths.insert({node.first, toAdd});
     }
+
+    return paths;
 }
