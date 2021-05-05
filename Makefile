@@ -40,11 +40,11 @@ main.o : main.cpp graph.o outputs
 outputs:
 	mkdir -p Outputs
 
-#test : output_msg tests.o graph.o
-#    $(LD) tests.o graph.o $(LDFLAGS) -o test
+test : output_msg tests.o graph.o
+	$(LD) tests.o graph.o $(LDFLAGS) -o test
 
-#tests.o : tests/tests.cpp tests/catch/catch.hpp
-#    $(CXX) $(CXXFLAGS) tests/tests.cpp
+tests.o : tests/tests.cpp tests/catch.hpp
+	$(CXX) $(CXXFLAGS) tests/tests.cpp
 
 graph.o: graph.h graph.cpp
 	$(CXX) $(CXXFLAGS) graph.cpp
