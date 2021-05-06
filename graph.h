@@ -22,8 +22,8 @@ class Graph {
             }
         };
 
+        friend void addEdgeFromLine(string current, Graph &graph);
         map<Node, vector<Edge*>> adjList;
-        map<int, bool> alr_visited;
 
     public:
         //construct Graph
@@ -56,7 +56,6 @@ class Graph {
         int getNumNodes();
         int getNumEdges();
 
-        void DepthTraversal();
         map<Node, vector<Node>> breadthSearch(Node starting_point);
 
         friend istream &operator>>( istream  &input, Graph &graph);

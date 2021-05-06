@@ -22,6 +22,7 @@ Graph::Graph() {
  */
 bool Graph::operator==(const Graph & other) const {
     if (adjList.size() != other.adjList.size()) {
+        cout << "different number of nodes" << endl;
         return false;
     }
 
@@ -30,17 +31,22 @@ bool Graph::operator==(const Graph & other) const {
 
         //if node in other isn't in this, return false
         if (adjList.find(otherPair.first) == adjList.end()) {
+            cout << "different nodes" << endl;
             return false;
         }
 
         //edge list corresponding to edge list in other
         auto & currentList = adjList.at(otherPair.first);
+
+        // if different number of edges at that node, return false
         if (currentList.size() != otherPair.second.size()) { 
+            cout << "different number of edges" << endl;
             return false;
         }
 
         for (size_t i = 0; i < currentList.size(); i++) {
-            if (!(currentList[i] == otherPair.second[i])) {
+            if (!(*currentList[i] == *otherPair.second[i])) {
+                cout << "different edges at i" << endl;
                 return false;
             }
         }
@@ -105,40 +111,43 @@ void Graph::printGraph() {
     }
 }
 
+void addEdgeFromLine(string current, Graph &graph) {
+    string delimiter = " ";
+    int from;
+    int to;
+    size_t pos;
+    pos = current.find(delimiter);
+
+    string temp = current.substr(0, pos);
+    stringstream (temp) >> from;
+    current.erase(0, pos + delimiter.length());
+    temp = current;
+    stringstream (temp) >> to;
+
+    // add the patents as nodes here
+    // convert the ints to Nodes
+    // graph.insertEdge(node_from, node_to)
+
+    graph.insertNode(from);
+    graph.insertNode(to);
+
+    graph.insertEdge(from, to);
+}
+
 istream &operator>>(istream  &input, Graph &graph) {
     string current;
     getline(input, current);
     while(current.at(0) == '#') {
         getline(input, current);
     }
-    string delimiter = " ";
     
     while(!input.eof()) {
-        int from;
-        int to;
-
-        string line;
-        getline(input, line);
-        size_t pos;
-        pos = line.find(delimiter);
-
-        string temp = line.substr(0, pos);
-        stringstream (temp) >> from;
-        line.erase(0, pos + delimiter.length());
-        temp = line;
-        stringstream (temp) >> to;
-
-        // add the patents as nodes here
-        // convert the ints to Nodes
-        // graph.insertEdge(node_from, node_to)
-
-        graph.insertNode(from);
-        graph.insertNode(to);
-
-        graph.insertEdge(from, to);
+        addEdgeFromLine(current, graph);
+        getline(input, current);
     }
-    return input;
+    addEdgeFromLine(current, graph);
 
+    return input;
 }
 
 int Graph::getNumNodes() {
@@ -154,26 +163,6 @@ int Graph::getNumNodes() {
 
 //     return count;
 // }
-
-void Graph::DepthTraversal() {
-    for (auto i: adjList) {
-        if (!alr_visited[i.first]) {
-            DepthTraversal(i.first);
-        }
-    }
-}
-
-void Graph::DepthTraversal(int node_val) {
-    alr_visited[node_val] = true;
-    cout << node_val << " ";
-
-    for (auto i: adjList[node_val]) {
-        if (!alr_visited[i->citee]) {
-            DepthTraversal(i->citee);
-        }
-    }
-
-}
 
 
 /* Breadth First Search implementation
