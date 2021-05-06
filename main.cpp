@@ -12,6 +12,7 @@ int main() {
     ifstream file("data/test_data.txt");
     file >> g;
     g.DepthTraversal();
+    
     // g.insertNode(1);
     // g.insertNode(2);
     // g.insertEdge(1, 2);

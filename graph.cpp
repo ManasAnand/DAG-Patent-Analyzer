@@ -17,6 +17,38 @@ Graph::Graph() {
     adjList = map<Node, vector<Edge*>>();
 }
 
+/**
+ * operator==
+ */
+bool Graph::operator==(const Graph & other) const {
+    if (adjList.size() != other.adjList.size()) {
+        return false;
+    }
+
+    for (auto & otherPair : other.adjList) {
+        //otherPair: {Node, vector<Edge>}
+
+        //if node in other isn't in this, return false
+        if (adjList.find(otherPair.first) == adjList.end()) {
+            return false;
+        }
+
+        //edge list corresponding to edge list in other
+        auto & currentList = adjList.at(otherPair.first);
+        if (currentList.size() != otherPair.second.size()) { 
+            return false;
+        }
+
+        for (size_t i = 0; i < currentList.size(); i++) {
+            if (!(currentList[i] == otherPair.second[i])) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 void Graph::insertNode(int id) {
     //note that if a node already exists nothing will change
     adjList.insert({id, vector<Edge*>(0)});
@@ -38,14 +70,6 @@ void Graph::insertEdge(Node src, Node dest) {
     edge -> citee = dest;
 
     adjList.at(src).push_back(edge);
-
-    // cout << "testing edge added at src " << src << endl;
-    
-    // vector<Edge*> toLoop = adjList.at(src);
-    // for (size_t i = 0; i < toLoop.size(); i++) {
-    //     cout << src <<".citer = " << toLoop[i] -> citer << " and " << src << ".citee = " << toLoop[i] -> citee << endl;
-    //     cout << endl;
-    // }
 }
 
 vector<int> Graph::incidentEdges(Node src) const {

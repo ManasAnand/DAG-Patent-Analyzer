@@ -36,3 +36,17 @@ Graph simpleFromConstructor() {
 
     return graph;
 }
+
+TEST_CASE("Simple inequality", "[ruleOf3]") {
+    Graph g1, g2;
+    g1.insertNode(1);
+    g1.insertNode(2);
+    g1.insertEdge(1, 2);
+
+    g2.insertNode(1);
+    g2.insertNode(2);
+    g2.insertEdge(1, 2);
+    g2.insertEdge(2, 1);
+
+    REQUIRE(!(g1 == g2));
+}
