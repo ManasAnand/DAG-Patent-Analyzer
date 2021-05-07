@@ -42,7 +42,7 @@ class Graph {
 
         void printGraph();
 
-        int GetGraph();
+        map<Graph::Node, vector<Graph::Edge *>>& GetGraph();
 
         void DepthTraversal();
 

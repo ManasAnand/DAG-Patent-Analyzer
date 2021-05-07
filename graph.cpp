@@ -107,7 +107,7 @@ istream &operator>>(istream  &input, Graph &graph) {
         string temp = line.substr(0, pos);
         stringstream (temp) >> from;
         line.erase(0, pos + delimiter.length());
-        temp = line.substr(0, pos);
+        temp = line;
         stringstream (temp) >> to;
 
         // add the patents as nodes here
@@ -123,7 +123,7 @@ istream &operator>>(istream  &input, Graph &graph) {
 
 }
 
-int Graph::GetGraph() {
+map<Graph::Node, vector<Graph::Edge*>>& Graph::GetGraph() {
     return adjList;
 }
 
