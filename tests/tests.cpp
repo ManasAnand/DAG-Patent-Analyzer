@@ -163,18 +163,33 @@ TEST_CASE("simple_graph constructor inequality", "[unit_tests]") {
     REQUIRE(!(g2 == g1));
 }
 
-TEST_CASE("Test Traversal", "[bfs]") {
-    Graph g;
-    g.insertNode(1);
-    g.insertNode(2);
-    g.insertNode(3);
-    g.insertNode(4);
+// TEST_CASE("Test Traversal", "[bfs]") {
+//     Graph g;
+//     g.insertNode(1);
+//     g.insertNode(2);
+//     g.insertNode(3);
+//     g.insertNode(4);
 
-    g.insertEdge(1,2);
-    g.insertEdge(2,4);
-    g.insertEdge(1,3);
+//     g.insertEdge(1,2);
+//     g.insertEdge(2,4);
+//     g.insertEdge(1,3);
+
+//     map<int, vector<int>> traversal = g.breadthSearch(1);
+//     map<int, vector<int>> expected; 
+// }
+
+TEST_CASE("Simple Traversal", "[bfs]") {
+    Graph g = simpleFromConstructor();
 
     map<int, vector<int>> traversal = g.breadthSearch(1);
-    map<int, vector<int>> expected;
-    
+
+    vector<int> oneToFive{ 5 };
+    REQUIRE(traversal.at(5) == oneToFive);
+
+    vector<int> oneToTen{ 2, 3, 10 };
+    REQUIRE(traversal.at(10) == oneToTen);
+
+    REQUIRE(traversal.find(8) == traversal.end());
+    REQUIRE(traversal.find(9) == traversal.end());
+    REQUIRE(traversal.find(1) == traversal.end());
 }

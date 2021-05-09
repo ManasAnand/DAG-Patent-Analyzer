@@ -154,15 +154,6 @@ int Graph::getNumNodes() {
     return adjList.size();
 }
 
-// int Graph::getNumEdges() {
-//     int count = 0;
-//     for (auto pair: adjList) {
-//         vector<int> current_edges = adjList(pair.first);
-//         count += current_edges;
-//     }
-
-//     return count;
-// }
 
 
 /* Breadth First Search implementation

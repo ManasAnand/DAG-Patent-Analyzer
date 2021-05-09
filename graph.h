@@ -54,7 +54,6 @@ class Graph {
         void printGraph();
 
         int getNumNodes();
-        int getNumEdges();
 
         map<Node, vector<Node>> breadthSearch(Node starting_point);
 
