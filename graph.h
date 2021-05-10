@@ -23,6 +23,9 @@ class Graph {
         };
 
         friend void addEdgeFromLine(string current, Graph &graph);
+
+        void BFSBetweennessHelper(int src, stack<int>& stack, map<Node, int>& sigma, map<int, vector<int>>& previous);
+
         map<Node, vector<Edge*>> adjList;
 
     public:
@@ -56,6 +59,8 @@ class Graph {
         int getNumNodes();
 
         map<Node, vector<Node>> breadthSearch(Node starting_point);
+
+        map<Node, double> betweennessCentrality();
 
         friend istream &operator>>( istream  &input, Graph &graph);
 
