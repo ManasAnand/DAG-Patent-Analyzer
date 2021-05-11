@@ -75,6 +75,7 @@ void Graph::insertEdge(Node src, Node dest) {
     Edge* edge = new Edge;
     edge -> citer = src;
     edge -> citee = dest;
+    edge -> weight = 0 + (double)(rand()) / ((double)(1/(1 - 0)))
 
     adjList.at(src).push_back(edge);
 }

@@ -17,6 +17,7 @@ class Graph {
             //citer -> citee
             Node citer;
             Node citee;
+            double weight;
 
             bool operator==(const Edge & other) {
                 return (citer == other.citer) && (citee == other.citee);
