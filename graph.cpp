@@ -5,6 +5,7 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
+#include <queue>
 
 #include "graph.h"
 using namespace std;
@@ -16,12 +17,43 @@ Graph::Graph() {
     adjList = map<Node, vector<Edge*>>();
 }
 
-Graph::Graph(const string& path) {
-    adjList = map<Node, vector<Edge*>>();
-    ifstream file(path);
-    file >> *this;
-}
+/**
+ * operator==
+ */
+bool Graph::operator==(const Graph & other) const {
+    if (adjList.size() != other.adjList.size()) {
+        cout << "different number of nodes" << endl;
+        return false;
+    }
 
+    for (auto & otherPair : other.adjList) {
+        //otherPair: {Node, vector<Edge>}
+
+        //if node in other isn't in this, return false
+        if (adjList.find(otherPair.first) == adjList.end()) {
+            cout << "different nodes" << endl;
+            return false;
+        }
+
+        //edge list corresponding to edge list in other
+        auto & currentList = adjList.at(otherPair.first);
+
+        // if different number of edges at that node, return false
+        if (currentList.size() != otherPair.second.size()) { 
+            cout << "different number of edges" << endl;
+            return false;
+        }
+
+        for (size_t i = 0; i < currentList.size(); i++) {
+            if (!(*currentList[i] == *otherPair.second[i])) {
+                cout << "different edges at i" << endl;
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
 
 void Graph::insertNode(int id) {
     //note that if a node already exists nothing will change
@@ -44,14 +76,6 @@ void Graph::insertEdge(Node src, Node dest) {
     edge -> citee = dest;
 
     adjList.at(src).push_back(edge);
-
-    // cout << "testing edge added at src " << src << endl;
-    
-    // vector<Edge*> toLoop = adjList.at(src);
-    // for (size_t i = 0; i < toLoop.size(); i++) {
-    //     cout << src <<".citer = " << toLoop[i] -> citer << " and " << src << ".citee = " << toLoop[i] -> citee << endl;
-    //     cout << endl;
-    // }
 }
 
 vector<int> Graph::incidentEdges(Node src) const {
@@ -87,62 +111,137 @@ void Graph::printGraph() {
     }
 }
 
+void addEdgeFromLine(string current, Graph &graph) {
+    string delimiter = " ";
+    int from;
+    int to;
+    size_t pos;
+    pos = current.find(delimiter);
+
+    string temp = current.substr(0, pos);
+    stringstream (temp) >> from;
+    current.erase(0, pos + delimiter.length());
+    temp = current;
+    stringstream (temp) >> to;
+
+    // add the patents as nodes here
+    // convert the ints to Nodes
+    // graph.insertEdge(node_from, node_to)
+
+    graph.insertNode(from);
+    graph.insertNode(to);
+
+    graph.insertEdge(from, to);
+
+    graph.s.insert(to);
+    graph.s.insert(from);
+}
+
 istream &operator>>(istream  &input, Graph &graph) {
     string current;
     getline(input, current);
     while(current.at(0) == '#') {
         getline(input, current);
     }
-    string delimiter = " ";
     
     while(!input.eof()) {
-        int from;
-        int to;
-
-        string line;
-        getline(input, line);
-        size_t pos;
-        pos = line.find(delimiter);
-
-        string temp = line.substr(0, pos);
-        stringstream (temp) >> from;
-        line.erase(0, pos + delimiter.length());
-        temp = line;
-        stringstream (temp) >> to;
-
-        // add the patents as nodes here
-        // convert the ints to Nodes
-        // graph.insertEdge(node_from, node_to)
-
-        graph.insertNode(from);
-        graph.insertNode(to);
-
-        graph.insertEdge(from, to);
+        addEdgeFromLine(current, graph);
+        getline(input, current);
     }
+    addEdgeFromLine(current, graph);
+
     return input;
-
 }
 
-map<Graph::Node, vector<Graph::Edge*>>& Graph::GetGraph() {
-    return adjList;
+int Graph::getNumNodes() {
+    return adjList.size();
 }
 
-void Graph::DepthTraversal() {
-    for (auto i: adjList) {
-        if (!alr_visited[i.first]) {
-            DepthTraversal(i.first);
+// int Graph::getNumEdges() {
+//     int count = 0;
+//     for (auto pair: adjList) {
+//         vector<int> current_edges = adjList(pair.first);
+//         count += current_edges;
+//     }
+
+//     return count;
+// }
+
+
+/* Breadth First Search implementation
+ * Heavily inspired by Brandes Algorithm for betweenness centrality
+ * Takes in a starting node and returns a map of ending nodes and the shortest path of nodes from the start to the end
+ */
+map<int, vector<int> > Graph::breadthSearch(Node starting_point) {
+    //map from node to nodes that lead to that node
+    map<int, vector<int> > previous;
+    map<int, vector<int> > paths;
+    //map from node to distance from starting node. Unvisited / start node = -1. Adjacent node = 0 distance
+    map<int, int> dist;
+    for(auto node: adjList) {
+        dist.insert({node.first, -1});
+    }
+    //map from end node to path from start node to that end node
+
+    queue<Node> q;
+    q.push(starting_point);
+    dist[starting_point] = 0;
+    while (!q.empty()) {
+        Node current = q.front();
+        q.pop();
+        vector<Edge*>& adjs = adjList[current]; 
+
+        for (auto edge: adjs) {
+            Node connection = edge -> citee;
+            
+            if (dist[connection] == -1) {
+                dist[connection] = dist[current] + 1;
+                q.push(connection);
+            } 
+            if (dist[connection] == dist[current] + 1) {
+                previous[connection].push_back(current);
+            }
         }
     }
-}
 
-void Graph::DepthTraversal(int node_val) {
-    alr_visited[node_val] = true;
-    cout << node_val << " ";
-
-    for (auto i: adjList[node_val]) {
-        if (!alr_visited[i->citee]) {
-            DepthTraversal(i->citee);
+    // cout << "previous " << endl;
+    // for(auto i: previous) {
+    //     cout << i.first << ": ";
+    //     // cout << i.second;
+    //     for (auto j: i.second) {
+    //         cout << j << " ";
+    //     }
+    //     cout << endl;
+    // }
+    for(auto node: dist) {
+        //if node never visited or node is start, do nothing
+    
+        if (node.second == -1) {
+            continue;
         }
+        if (node.first == starting_point) {
+            continue;
+        }
+        vector<int> toAdd;
+        int currentNode = node.first;
+        int currentDist = node.second;
+        
+        while (currentDist > 0) {
+            vector<int> prevList = previous[currentNode];
+            
+            for (auto prevNode : prevList) {
+                // cout << currentDist << endl;
+                if (dist[prevNode] == currentDist - 1) {
+                    toAdd.push_back(currentNode);
+                    currentDist--;
+                    currentNode = prevNode;
+                }
+            }
+        }
+        
+        std::reverse(toAdd.begin(), toAdd.end());
+        paths.insert({node.first, toAdd});
     }
 
+    return paths;
 }

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <list>
+#include <unordered_set>
 
 using namespace std;
 
@@ -16,17 +17,30 @@ class Graph {
             //citer -> citee
             Node citer;
             Node citee;
+
+            bool operator==(const Edge & other) {
+                return (citer == other.citer) && (citee == other.citee);
+            }
         };
 
-        void DepthTraversal(int v);
+        friend void addEdgeFromLine(string current, Graph &graph);
         map<Node, vector<Edge*>> adjList;
-        map<int, bool> alr_visited;
 
     public:
         //construct Graph
         Graph();
+        unordered_set<int> s;
 
-        Graph(const string& path);
+
+        //rule of 3 UNCOMMENT IF NEEDED
+        //Graph(const & Graph & other);
+        //Graph & operator=(const Graph & other);
+        //~Graph();
+        //void _clear();
+
+        bool operator==(const Graph & other) const;
+
+        void DepthTraversal(int v);
 
         //insertVertex
         void insertNode(int id);
@@ -42,9 +56,12 @@ class Graph {
 
         void printGraph();
 
-        map<Graph::Node, vector<Graph::Edge *>>& GetGraph();
+        int getNumNodes();
+        int getNumEdges();
 
-        void DepthTraversal();
+        map<Node, vector<Node>> breadthSearch(Node starting_point);
 
         friend istream &operator>>( istream  &input, Graph &graph);
+
+
 };

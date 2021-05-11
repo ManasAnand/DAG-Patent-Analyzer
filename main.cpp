@@ -11,7 +11,8 @@ int main() {
 
     ifstream file("data/cit-Patents.txt");
     file >> g;
-    cout << g.GetGraph().size() << endl;
+    cout << g.s.size() << endl;
+    
     // g.insertNode(1);
     // g.insertNode(2);
     // g.insertEdge(1, 2);

@@ -1,0 +1,18 @@
+# SHOULD IGNORE THESE LINES
+# Built from simple_graph.jpeg
+1 2
+1 5
+2 3
+2 4
+2 6
+3 4
+3 5
+3 10
+4 7
+5 7
+6 4
+6 7
+7 10
+8 5
+8 7
+9 6
