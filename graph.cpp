@@ -6,6 +6,7 @@
 #include <fstream>
 #include <vector>
 #include <queue>
+#include <stack>
 
 #include "graph.h"
 using namespace std;
@@ -157,15 +158,6 @@ int Graph::getNumNodes() {
     return adjList.size();
 }
 
-// int Graph::getNumEdges() {
-//     int count = 0;
-//     for (auto pair: adjList) {
-//         vector<int> current_edges = adjList(pair.first);
-//         count += current_edges;
-//     }
-
-//     return count;
-// }
 
 
 /* Breadth First Search implementation
@@ -245,3 +237,75 @@ map<int, vector<int> > Graph::breadthSearch(Node starting_point) {
 
     return paths;
 }
+
+void Graph::BFSBetweennessHelper(Node src, stack<int>& stack, map<Node, int>& sigma, map<int, vector<int>>& previous) {
+    //map from node to distance from starting node. Unvisited / start node = -1. Adjacent node = 0 distance
+    map<int, int> dist;
+    for(auto node: adjList) {
+        dist.insert({node.first, -1});
+    }
+
+    queue<Node> q;
+    q.push(src);
+    dist[src] = 0;
+    while (!q.empty()) {
+        Node current = q.front();
+        stack.push(current);
+        q.pop();
+        vector<Edge*>& adjs = adjList[current]; 
+
+        for (auto edge: adjs) {
+            Node connection = edge -> citee;
+            
+            if (dist[connection] == -1) {
+                dist[connection] = dist[current] + 1;
+                q.push(connection);
+            } 
+            if (dist[connection] == dist[current] + 1) {
+                previous[connection].push_back(current);
+                sigma[connection] = sigma[connection] + sigma[current];
+            }
+        }
+    }
+}
+
+//calculates the betweennessCentrality of every node in graph
+map<int, double> Graph::betweennessCentrality() {
+    map<Node, double> betweenness;
+    map<Node, double> delta;
+    map<int, vector<int>> previous;
+    stack<Node> s;
+
+    //for each node in the graph
+    for (auto nodePair : adjList) {
+        Node node = nodePair.first;
+
+        //reset sigma, delta
+        map<Node, int> sigma = { {node, 1} };
+        delta.clear();
+        previous.clear();
+        
+
+        //Step 2.2 BFSBetweennessHelper stuff
+        BFSBetweennessHelper(node, s, sigma, previous);
+
+        //Step 2.3 "While stack not empty"
+        while (!s.empty()) {
+            Node current = s.top();
+            s.pop();
+
+            for (vector<int>::const_iterator it = previous.at(current).begin(); it != previous.at(current).end(); ++it) {
+                //previous.at(current) = vector<Node>
+                int v = *it;
+                delta[v] = delta[v] + ( ( double(sigma[v]) / double( sigma[current]) ) * (1 + delta[current]) );
+
+                if (current != node) {
+                    betweenness[current] = betweenness[current] + delta[current];
+                }
+            }
+        }
+    }
+
+    return betweenness;
+}
+
