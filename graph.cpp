@@ -346,24 +346,12 @@ map<int, double> Graph::betweennessCentrality() {
     return betweenness;
 }
 
-<<<<<<< HEAD
-/* Dijkstra's Algorithm implementation */
-map<int, vector<int>> Graph::dijkstraSearch(Node starting_point) {
-    map<int, int > previous;
-    map<int, vector<int> > paths;
-    map<int, int> dist;
-    std::priority_queue <int> pq;
-    double inf = std::numeric_limits<double>::infinity();
 
-    for(auto node: adjList) {
-        dist.insert({node.first, inf});
-        previous.insert({node.first, -1});
-=======
+
 map<int, double> Graph::dijkstraSearch(Node starting_point) {
     priority_queue<pair<int,int>, vector <pair<int, int>>, greater<pair<int, int>> pq;
     double INF = std::numeric_limits<double>::infinity();
     map<int, double> dist;
->>>>>>> 82682b1503c8ffa72bd37bba376fc7823a16d7a2
 
     for (auto x: adjList) {
         dist[x.first] = INF;
