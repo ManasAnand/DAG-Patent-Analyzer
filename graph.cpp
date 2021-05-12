@@ -8,6 +8,7 @@
 #include <queue>
 #include <stack>
 #include <random>
+#include <algorithm>
 
 
 #include "graph.h"
@@ -17,7 +18,7 @@ using namespace std;
 *Constructor to initialize unordered map
 */
 Graph::Graph() {
-    adjList = map<Node, vector<Edge*>>();
+    adjList = map<Node, vector<Edge>>();
 }
 
 /**
@@ -48,8 +49,14 @@ bool Graph::operator==(const Graph & other) const {
         }
 
         for (size_t i = 0; i < currentList.size(); i++) {
-            if (!(*currentList[i] == *otherPair.second[i])) {
-                cout << "different edges at i" << endl;
+            Edge currentEdge = currentList[i];
+            Edge otherEdge = otherPair.second[i];
+
+
+            const bool otherInCurrent = (std::find(currentList.begin(), currentList.end(), otherEdge) != currentList.end());
+            const bool currentInOther = (std::find(otherPair.second.begin(), otherPair.second.end(), currentEdge) != otherPair.second.end());
+            if (!otherInCurrent || !currentInOther) {
+                cout << "edge in one list isn't in the other" << endl;
                 return false;
             }
         }
@@ -60,33 +67,33 @@ bool Graph::operator==(const Graph & other) const {
 
 void Graph::insertNode(int id) {
     //note that if a node already exists nothing will change
-    adjList.insert({id, vector<Edge*>(0)});
+    adjList.insert({id, vector<Edge>(0)});
 }
 
 void Graph::insertEdge(Node src, Node dest) {
     //TODO: Check if edge already exists or if node src doesn't exist
 
     //.at throws exception if node(src) doesn't exist
-    vector<Edge*> edgeList = adjList.at(src);
+    vector<Edge> edgeList = adjList.at(src);
     for (auto e : edgeList) {
-        if (e -> citee  == dest) {
+        if (e.citee  == dest) {
             return; //do nothing
         }
     }
 
-    Edge* edge = new Edge;
-    edge -> citer = src;
-    edge -> citee = dest;
-    edge -> weight = 0 + (double)(rand()) / ((double)(1/(1 - 0)));
+    Edge edge;
+    edge.citer = src;
+    edge.citee = dest;
+    edge.weight = 0 + (double)(rand()) / ((double)(1/(1 - 0)));
 
     adjList.at(src).push_back(edge);
 }
 
 vector<int> Graph::incidentEdges(Node src) const {
     vector<Node> toReturn;
-    vector<Edge*> toLoop = adjList.at(src);
+    vector<Edge> toLoop = adjList.at(src);
     for (size_t i = 0; i < toLoop.size(); i++) {
-        toReturn.push_back(toLoop[i] -> citee);
+        toReturn.push_back(toLoop[i].citee);
     }
 
     return toReturn;
@@ -94,9 +101,9 @@ vector<int> Graph::incidentEdges(Node src) const {
 
 bool Graph::areAdjacent(Node src, Node dest) {
     //.at throws exception if node(src) doesn't exist
-    vector<Edge*> edgeList = adjList.at(src);
+    vector<Edge> edgeList = adjList.at(src);
     for (auto e : edgeList) {
-        if (e -> citee  == dest) {
+        if (e.citee  == dest) {
             return true;
         }
     }
@@ -117,9 +124,9 @@ Graph Graph::subgraph(Node start) {
     while(!q.empty()) {
         Node current = q.front();
         q.pop();
-        vector<Edge*> edgeList = adjList.at(current);
+        vector<Edge> edgeList = adjList.at(current);
         for (auto it = edgeList.begin(); it != edgeList.end(); ++it) {
-            Node endpoint = (*it) -> citee;
+            Node endpoint = (*it).citee;
             g.insertNode(endpoint);
             g.insertEdge(current, endpoint);
             q.push(endpoint);
@@ -132,9 +139,9 @@ Graph Graph::subgraph(Node start) {
 void Graph::printGraph() {
     for (auto it = adjList.begin(); it != adjList.end(); ++it) {
         cout << "Edges at node " << it -> first << endl;
-        vector<Edge*> toLoop = it -> second;
+        vector<Edge> toLoop = it -> second;
         for (size_t i = 0; i < toLoop.size(); i++) {
-            cout << toLoop[i]->citer << " ---> " << toLoop[i]->citee << endl;
+            cout << toLoop[i].citer << " ---> " << toLoop[i].citee << endl;
             cout << endl;
         }
     }
@@ -209,10 +216,10 @@ map<int, vector<int> > Graph::breadthSearch(Node starting_point) {
     while (!q.empty()) {
         Node current = q.front();
         q.pop();
-        vector<Edge*>& adjs = adjList[current]; 
+        vector<Edge>& adjs = adjList[current]; 
 
         for (auto edge: adjs) {
-            Node connection = edge -> citee;
+            Node connection = edge.citee;
             
             if (dist[connection] == -1) {
                 dist[connection] = dist[current] + 1;
@@ -280,10 +287,10 @@ void Graph::BFSBetweennessHelper(Node src, stack<int>& stack, map<Node, int>& si
         Node current = q.front();
         stack.push(current);
         q.pop();
-        vector<Edge*>& adjs = adjList[current]; 
+        vector<Edge>& adjs = adjList[current]; 
 
         for (auto edge: adjs) {
-            Node connection = edge -> citee;
+            Node connection = edge.citee;
             
             if (dist[connection] == -1) {
                 dist[connection] = dist[current] + 1;

@@ -21,7 +21,7 @@ class Graph {
             double weight;
 
             //comparing weight isn't relevent(?)
-            bool operator==(const Edge & other) {
+            bool operator==(const Edge & other) const {
                 return (citer == other.citer) && (citee == other.citee);
             }
         };
@@ -30,7 +30,7 @@ class Graph {
 
         void BFSBetweennessHelper(int src, stack<int>& stack, map<Node, int>& sigma, map<int, vector<int>>& previous);
 
-        map<Node, vector<Edge*>> adjList;
+        map<Node, vector<Edge>> adjList;
 
     public:
         //construct Graph
