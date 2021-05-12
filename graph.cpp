@@ -345,6 +345,7 @@ map<int, double> Graph::betweennessCentrality() {
     return betweenness;
 }
 
+/* Dijkstra's Algorithm implementation */
 map<int, vector<int>> Graph::dijkstraSearch(Node starting_point) {
     map<int, int > previous;
     map<int, vector<int> > paths;
