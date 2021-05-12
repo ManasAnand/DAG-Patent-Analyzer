@@ -347,7 +347,7 @@ map<int, double> Graph::betweennessCentrality() {
 }
 
 map<int, double> Graph::dijkstraSearch(Node starting_point) {
-    priority_queue<pair<int,int>, vector <pair<int, int>>, greater<pair<int, int>> pq;
+    priority_queue<pair<int,int>, vector <pair<int, int>>, greater<pair<int, int>>> pq;
     double INF = std::numeric_limits<double>::infinity();
     map<int, double> dist;
 
@@ -365,8 +365,8 @@ map<int, double> Graph::dijkstraSearch(Node starting_point) {
         // Get all adjacent of u. 
         for (auto y : adjList[u])
         {
-            int v = y.first;
-            int weight = y.second;
+            int v = y.citee;
+            int weight = y.weight;
   
             if (dist[v] > dist[u] + weight)
             {
@@ -375,7 +375,6 @@ map<int, double> Graph::dijkstraSearch(Node starting_point) {
             }
         }
     }
-
     return dist;
 
 }

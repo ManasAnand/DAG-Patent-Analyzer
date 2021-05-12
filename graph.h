@@ -74,7 +74,7 @@ class Graph {
 
         map<Node, vector<Node>> breadthSearch(Node starting_point);
 
-        map<int, vector<int>> dijkstraSearch(Node starting_point);
+        map<int, double> dijkstraSearch(Node starting_point);
 
         map<Node, double> betweennessCentrality();
 
