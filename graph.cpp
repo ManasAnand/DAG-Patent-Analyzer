@@ -77,7 +77,7 @@ void Graph::insertEdge(Node src, Node dest) {
     Edge* edge = new Edge;
     edge -> citer = src;
     edge -> citee = dest;
-    edge -> weight = 0 + (double)(rand()) / ((double)(1/(1 - 0)))
+    edge -> weight = 0 + (double)(rand()) / ((double)(1/(1 - 0)));
 
     adjList.at(src).push_back(edge);
 }
@@ -102,6 +102,31 @@ bool Graph::areAdjacent(Node src, Node dest) {
     }
 
     return false;
+}
+
+Graph Graph::subgraph(Node start) {
+    Graph g;
+
+    if (adjList.find(start) == adjList.end()) {
+        return g;
+    }
+
+    g.insertNode(start);
+    queue<Node> q;
+    q.push(start);
+    while(!q.empty()) {
+        Node current = q.front();
+        q.pop();
+        vector<Edge*> edgeList = adjList.at(current);
+        for (auto it = edgeList.begin(); it != edgeList.end(); ++it) {
+            Node endpoint = (*it) -> citee;
+            g.insertNode(endpoint);
+            g.insertEdge(current, endpoint);
+            q.push(endpoint);
+        }
+    }
+
+    return g;
 }
 
 void Graph::printGraph() {
@@ -273,6 +298,7 @@ void Graph::BFSBetweennessHelper(Node src, stack<int>& stack, map<Node, int>& si
 }
 
 //calculates the betweennessCentrality of every node in graph
+//taken from https://www.cl.cam.ac.uk/teaching/1718/MLRD/handbook/brandes.html
 map<int, double> Graph::betweennessCentrality() {
     map<Node, double> betweenness;
     map<Node, double> delta;

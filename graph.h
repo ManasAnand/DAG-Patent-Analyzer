@@ -19,6 +19,7 @@ class Graph {
             Node citee;
             double weight;
 
+            //comparing weight isn't relevent(?)
             bool operator==(const Edge & other) {
                 return (citer == other.citer) && (citee == other.citee);
             }
@@ -33,6 +34,10 @@ class Graph {
     public:
         //construct Graph
         Graph();
+
+        //create subgraph from a starting node
+        Graph subgraph(Node start);
+        
         unordered_set<int> s;
 
 
@@ -67,6 +72,5 @@ class Graph {
         map<Node, double> betweennessCentrality();
 
         friend istream &operator>>( istream  &input, Graph &graph);
-
 
 };
