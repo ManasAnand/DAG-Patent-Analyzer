@@ -24,6 +24,10 @@ class Graph {
             bool operator==(const Edge & other) const {
                 return (citer == other.citer) && (citee == other.citee);
             }
+
+            void setWeight(double w) {
+                weight = w;
+            }
         };
 
         friend void addEdgeFromLine(string current, Graph &graph);

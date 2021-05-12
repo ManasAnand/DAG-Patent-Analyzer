@@ -8,6 +8,7 @@
 #include <queue>
 #include <stack>
 #include <random>
+#include <limits>
 #include <algorithm>
 
 
@@ -345,6 +346,7 @@ map<int, double> Graph::betweennessCentrality() {
     return betweenness;
 }
 
+<<<<<<< HEAD
 /* Dijkstra's Algorithm implementation */
 map<int, vector<int>> Graph::dijkstraSearch(Node starting_point) {
     map<int, int > previous;
@@ -356,25 +358,38 @@ map<int, vector<int>> Graph::dijkstraSearch(Node starting_point) {
     for(auto node: adjList) {
         dist.insert({node.first, inf});
         previous.insert({node.first, -1});
+=======
+map<int, double> Graph::dijkstraSearch(Node starting_point) {
+    priority_queue<pair<int,int>, vector <pair<int, int>>, greater<pair<int, int>> pq;
+    double INF = std::numeric_limits<double>::infinity();
+    map<int, double> dist;
+>>>>>>> 82682b1503c8ffa72bd37bba376fc7823a16d7a2
 
+    for (auto x: adjList) {
+        dist[x.first] = INF;
     }
-    
-    dist[starting_point] = 0;
-    pq.push(starting_point);
-    while (!pq.empty()) {
-        int curr_node = pq.top();
-        pq.pop();
-        // add all neighbors 
-        // update only if new distance < current distance 
 
-        for (Edge* edge: adjList[curr_node]) {
-            int new_distance = dist[curr_node] + edge->weight;
-            if (new_distance < dist[edge->citee]) {
-                dist[edge->citee] = new_distance;
-                previous[edge->citee] = curr_node;
+    pq.push(make_pair(0, starting_point));
+    dist[starting_point] = 0;
+
+    while (!pq.empty()) {
+        int u = pq.top().second;
+        pq.pop();
+  
+        // Get all adjacent of u. 
+        for (auto y : adjList[u])
+        {
+            int v = y.first;
+            int weight = y.second;
+  
+            if (dist[v] > dist[u] + weight)
+            {
+                dist[v] = dist[u] + weight;
+                pq.push(make_pair(dist[v], v));
             }
-            pq.push(edge->citee);
         }
     }
-    
+
+    return dist;
+
 }
