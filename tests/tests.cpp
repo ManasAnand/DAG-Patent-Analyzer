@@ -243,6 +243,9 @@ TEST_CASE("Simple Traversal", "[bfs]") {
     REQUIRE(traversal.find(1) == traversal.end());
 }
 
+/**
+ * Test subgraph function
+ */
 TEST_CASE("Empty subgraph", "[subgraph]") {
     Graph g;
     g.insertNode(1);
@@ -365,4 +368,16 @@ TEST_CASE("Disconnected Subgraph 2", "[subgraph]") {
 
     REQUIRE(subgraph == expected);
     REQUIRE(expected == subgraph);
+}
+
+TEST_CASE("Disconnected Betweenness Centrality 1", "[betweenness]") {
+    Graph subgraph = simpleFromConstructor();
+
+    map<Node, double> betweenness = subgraph.betweennessCentrality();
+
+    for (auto const& x : betweenness) {
+        cout << x.first << ": " << x.second << endl;
+    }
+
+    REQUIRE(true);
 }

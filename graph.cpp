@@ -317,11 +317,11 @@ map<int, double> Graph::betweennessCentrality() {
     for (auto nodePair : adjList) {
         Node node = nodePair.first;
 
-        //reset sigma, delta
+        //reset sigma, delta, betweeenness
         map<Node, int> sigma = { {node, 1} };
         delta.clear();
         previous.clear();
-        
+        betweenness[1] = 0;
 
         //Step 2.2 BFSBetweennessHelper stuff
         BFSBetweennessHelper(node, s, sigma, previous);
@@ -331,13 +331,16 @@ map<int, double> Graph::betweennessCentrality() {
             Node current = s.top();
             s.pop();
 
-            for (vector<int>::const_iterator it = previous.at(current).begin(); it != previous.at(current).end(); ++it) {
-                //previous.at(current) = vector<Node>
-                int v = *it;
-                delta[v] = delta[v] + ( ( double(sigma[v]) / double( sigma[current]) ) * (1 + delta[current]) );
+            //need this check because previous does not contain current
+            if (current != node) {
+                for (vector<int>::const_iterator it = previous.at(current).begin(); it != previous.at(current).end(); ++it) {
+                    //previous.at(current) = vector<Node>
+                    int v = *it;
+                    delta[v] = delta[v] + ( ( double(sigma[v]) / double( sigma[current]) ) * (1 + delta[current]) );
 
-                if (current != node) {
-                    betweenness[current] = betweenness[current] + delta[current];
+                    if (current != node) {
+                        betweenness[current] = betweenness[current] + delta[current];
+                    }
                 }
             }
         }
