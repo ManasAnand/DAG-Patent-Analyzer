@@ -345,3 +345,35 @@ map<int, double> Graph::betweennessCentrality() {
     return betweenness;
 }
 
+map<int, vector<int>> Graph::dijkstraSearch(Node starting_point) {
+    map<int, int > previous;
+    map<int, vector<int> > paths;
+    map<int, int> dist;
+    std::priority_queue <int> pq;
+    double inf = std::numeric_limits<double>::infinity();
+
+    for(auto node: adjList) {
+        dist.insert({node.first, inf});
+        previous.insert({node.first, -1});
+
+    }
+    
+    dist[starting_point] = 0;
+    pq.push(starting_point);
+    while (!pq.empty()) {
+        int curr_node = pq.top();
+        pq.pop();
+        // add all neighbors 
+        // update only if new distance < current distance 
+
+        for (Edge* edge: adjList[curr_node]) {
+            int new_distance = dist[curr_node] + edge->weight;
+            if (new_distance < dist[edge->citee]) {
+                dist[edge->citee] = new_distance;
+                previous[edge->citee] = curr_node;
+            }
+            pq.push(edge->citee);
+        }
+    }
+    
+}

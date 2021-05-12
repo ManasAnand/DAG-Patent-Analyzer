@@ -70,6 +70,8 @@ class Graph {
 
         map<Node, vector<Node>> breadthSearch(Node starting_point);
 
+        map<int, vector<int>> dijkstraSearch(Node starting_point);
+
         map<Node, double> betweennessCentrality();
 
         friend istream &operator>>( istream  &input, Graph &graph);
