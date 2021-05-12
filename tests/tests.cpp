@@ -193,3 +193,75 @@ TEST_CASE("Simple Traversal", "[bfs]") {
     REQUIRE(traversal.find(9) == traversal.end());
     REQUIRE(traversal.find(1) == traversal.end());
 }
+
+TEST_CASE("Empty subgraph", "[subgraph]") {
+    Graph g;
+    g.insertNode(1);
+    g.insertNode(2);
+    g.insertEdge(1, 2);
+
+    Graph subgraph = g.subgraph(3);
+
+    Graph empty;
+
+    REQUIRE(subgraph == empty);
+    REQUIRE(empty == subgraph);
+}
+
+TEST_CASE("Basic subgraph", "[subgraph]") {
+    Graph g;
+    g.insertNode(1);
+    g.insertNode(2);
+    g.insertEdge(1, 2);
+
+    Graph subgraph = g.subgraph(1);
+
+    REQUIRE(g == subgraph);
+    REQUIRE(subgraph == g);
+
+    Graph otherSubgraph = g.subgraph(2);
+
+    Graph justTwo;
+    justTwo.insertNode(2);
+
+    REQUIRE(otherSubgraph == justTwo);
+    REQUIRE(justTwo == otherSubgraph);
+}
+
+TEST_CASE("Simple subgraph 1", "[subgraph]") {
+    Graph g = simpleFromConstructor();
+
+    Graph subgraph = g.subgraph(1);
+
+    Graph expected;
+    expected.insertNode(1);
+    expected.insertNode(2);
+    expected.insertNode(3);
+    expected.insertNode(4);
+    expected.insertNode(5);
+    expected.insertNode(6);
+    expected.insertNode(7);
+    expected.insertNode(10);
+    expected.insertEdge(1, 2);
+    expected.insertEdge(1, 5);
+    expected.insertEdge(2, 3);
+    expected.insertEdge(2, 4);
+    expected.insertEdge(2, 6);
+    expected.insertEdge(3, 4);
+    expected.insertEdge(3, 5);
+    expected.insertEdge(3, 10);
+    expected.insertEdge(4, 7);
+    expected.insertEdge(5, 7);
+    expected.insertEdge(6, 4);
+    expected.insertEdge(6, 7);
+    expected.insertEdge(7, 10);
+    
+    //sanity checks
+    REQUIRE(!(g == expected));
+    REQUIRE(!(expected == g));
+    REQUIRE(!(g == subgraph));
+    REQUIRE(!(subgraph == g));
+
+    REQUIRE(subgraph == expected);
+    REQUIRE(expected == subgraph);
+}
