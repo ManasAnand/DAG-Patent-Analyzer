@@ -33,7 +33,6 @@ output_msg: ; $(CLANG_VERSION_MSG)
 $(EXE) : output_msg $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(EXE)
 
-
 main.o : main.cpp graph.o outputs
 	$(CXX) $(CXXFLAGS) main.cpp 
 
