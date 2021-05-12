@@ -346,10 +346,9 @@ map<int, double> Graph::betweennessCentrality() {
     return betweenness;
 }
 
-
-
+/**
 map<int, double> Graph::dijkstraSearch(Node starting_point) {
-    priority_queue<pair<int,int>, vector <pair<int, int>>, greater<pair<int, int>> pq;
+    priority_queue<pair<int,int>, vector <pair<int, int>>, greater<pair<int, int>>>;
     double INF = std::numeric_limits<double>::infinity();
     map<int, double> dist;
 
@@ -379,5 +378,5 @@ map<int, double> Graph::dijkstraSearch(Node starting_point) {
     }
 
     return dist;
-
 }
+*/
