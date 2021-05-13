@@ -381,3 +381,21 @@ TEST_CASE("Disconnected Betweenness Centrality 1", "[betweenness]") {
 
     REQUIRE(true);
 }
+
+TEST_CASE("Dijikstras Algorithm Simple", "[dijikstras]") {
+    Graph g;
+    g.insertNode(1);
+    g.insertNode(2);
+    g.insertNode(3);    
+    g.insertEdge(1,2, 1.0);
+    g.insertEdge(2,3, 7.3);
+    g.insertEdge(1,3, 3.2);
+
+    map<int, double> m = g.dijkstraSearch(1);
+
+    REQUIRE(m[1] == 0.0);
+    REQUIRE(m[2] == 1.0);
+    REQUIRE(m[3] == 3.0);
+
+
+}
