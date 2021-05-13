@@ -476,6 +476,4 @@ TEST_CASE("Basic Dijkstra's Algorithm", "[dijkstra]") {
     REQUIRE(m[1] == 0.0);
     REQUIRE(m[2] == 1.0);
     REQUIRE(m[3] == 3.2);
-
-
 }

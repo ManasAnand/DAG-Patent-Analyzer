@@ -85,7 +85,12 @@ void Graph::insertEdge(Node src, Node dest) {
     Edge edge;
     edge.citer = src;
     edge.citee = dest;
-    edge.weight = 0 + (double)(rand()) / ((double)(1/(1 - 0)));
+
+    //generates random double between 0 and 10
+    std::random_device rd;
+    std::default_random_engine eng(rd());
+    std::uniform_real_distribution<double> distr(0, 10);
+    edge.weight = distr(eng);
 
     adjList.at(src).push_back(edge);
 }
