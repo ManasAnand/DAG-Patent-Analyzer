@@ -9,7 +9,7 @@ CXXFLAGS = -std=c++1y -stdlib=libc++ -O0 $(WARNINGS) -g -c
 LDFLAGS = -std=c++1y -stdlib=libc++ -lc++abi
 MKDIR_P = mkdir -p
 
-# Custom Clang version enforcement logic:
+# Custom Clang version enforcement logic: (from lab_intro)
 ccred=$(shell echo -e "\033[0;31m")
 ccyellow=$(shell echo -e "\033[0;33m")
 ccend=$(shell echo -e "\033[0m")
