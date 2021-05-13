@@ -5,7 +5,8 @@ Overall, our team was able to meet the goals we set fourth earlier in the projec
 ## II. Discoveries
 The program traverses through the dataset and creates a subgraph that starts at the user-specified patent number. It returns the betweenness centrality of each node of the subgraph as well as the lowest weighted path.
 
-A sample output is shown below
+We have an extremely large dataset and a limited amount of computational power, so we were unable to find the results for our actual dataset. However, we recreated a section of the data in a smaller file and received the following results:
+
 ``
 The Betweenness Centrality at every node in generated subgraph is
 1: 0
