@@ -395,7 +395,7 @@ TEST_CASE("Dijikstras Algorithm Simple", "[dijikstras]") {
 
     REQUIRE(m[1] == 0.0);
     REQUIRE(m[2] == 1.0);
-    REQUIRE(m[3] == 3.0);
+    REQUIRE(m[3] == 3.2);
 
 
 }

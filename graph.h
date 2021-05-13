@@ -62,6 +62,8 @@ class Graph {
         //insertEdge
         void insertEdge(Node src, Node dest);
 
+        void insertEdge(Node src, Node dest, double weight);
+
         //incidentEdges
         vector<Node> incidentEdges(Node src) const;
 

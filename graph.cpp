@@ -90,6 +90,25 @@ void Graph::insertEdge(Node src, Node dest) {
     adjList.at(src).push_back(edge);
 }
 
+void Graph::insertEdge(Node src, Node dest, double weight) {
+    //TODO: Check if edge already exists or if node src doesn't exist
+
+    //.at throws exception if node(src) doesn't exist
+    vector<Edge> edgeList = adjList.at(src);
+    for (auto e : edgeList) {
+        if (e.citee  == dest) {
+            return; //do nothing
+        }
+    }
+
+    Edge edge;
+    edge.citer = src;
+    edge.citee = dest;
+    edge.setWeight(weight);
+
+    adjList.at(src).push_back(edge);
+}
+
 vector<int> Graph::incidentEdges(Node src) const {
     vector<Node> toReturn;
     vector<Edge> toLoop = adjList.at(src);
@@ -351,7 +370,7 @@ map<int, double> Graph::betweennessCentrality() {
 
 
 map<int, double> Graph::dijkstraSearch(Node starting_point) {
-    priority_queue<pair<int,int>, vector <pair<int, int>>, greater<pair<int, int>>> pq;
+    priority_queue<pair<int,double>, vector <pair<int, double>>, greater<pair<int, double>>> pq;
     double INF = std::numeric_limits<double>::infinity();
     map<int, double> dist;
 
@@ -370,7 +389,7 @@ map<int, double> Graph::dijkstraSearch(Node starting_point) {
         for (auto y : adjList[u])
         {
             int v = y.citee;
-            int weight = y.weight;
+            double weight = y.weight;
   
             if (dist[v] > dist[u] + weight)
             {
