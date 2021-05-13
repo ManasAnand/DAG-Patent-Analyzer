@@ -1,24 +1,32 @@
-# CS225 Final Project
-## taran4-mpara3-manasa3-anakind2
+# taran4-mpara3-manasa3-anakind2
+# Final Project
 
 
-#  VIDEO PRESENTATION OF OUR PROJECT (link when done)
+## [Video Presentation of Our Project]()
 
-## Table of Contents (feel free to make changes as needed)
+## Table of Contents 
 - [Documentation](#documentation)
 - [Installation](#installation)
-- [Building/Testing](#building/testing) 
+- [Building and Testing](#building)
 - [Features](#features)
 
-## documentation
-All documentation outlining our project can be found in the ``development.md`` folder - this includes our development log, goals, and results 
-
-## installation
+## Documentation
+All documentation outlining our project development and results can be found in the [development](https://github-dev.cs.illinois.edu/cs225-sp21/taran4-mpara3-manasa3-anakind2/tree/master/development) folder
+## Installation
 To setup our project, clone the repository locally using the command
+<br>
 `` git clone https://github-dev.cs.illinois.edu/cs225-sp21/taran4-mpara3-manasa3-anakind2.git``
-then ``cd`` to the folder. 
+<br>
+then ``cd`` to the directory in order to use the commands for executing our cases as covered in the next section
 
-##building/testing
+## Building and Testing
+In order to run our tests suites, users must be running on EWS and execute the ``module load llvm/6.0.1`` command on their terminal then run ``make`` to compile. <br> 
+Afterwards, execute ``make test && ./tests`` in order to run our test cases (our cases can be found [here](https://github-dev.cs.illinois.edu/cs225-sp21/taran4-mpara3-manasa3-anakind2/tree/master/tests) and ``./main`` executions in the ``main.cpp`` folder)
 
 
-##features
+## Features
+* Our algorithms can be found in ``graph.cpp``
+  * The algorithms we implemented were Dijkstras, BFS/Brandes Algorithms
+* Used an istream operator to clean our data
+* Wrote premade graphs to run our tests on single node, connected, and discontted
+    * samples of our tests can be found in our ``tests`` folder and in ``main.cpp``

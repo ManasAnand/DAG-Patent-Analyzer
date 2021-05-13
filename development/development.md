@@ -12,3 +12,5 @@ To say the least, our team has experienced a minor setback accomplishing the goa
 ## WEEK 4 (MAY 3 - MAY 12)
 As of May 9th, our team has made substaintial progress towards our development. Our most notable development is getting our ``tests`` to work along writing test cases for our traversal algorithm. 
 We plan to continue finishing our implementation and move forward with our final deliverables (inclusing the ``README.md`` and video demo) by May 12th. 
+
+As of May 12th, our team finished implementing our algorithms and included tests in ``tests`` and ``main.cpp``. We also worked upon making the finishing touches with our code and final deliverables for the project
