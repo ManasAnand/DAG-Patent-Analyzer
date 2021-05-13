@@ -23,7 +23,7 @@ Graph::Graph() {
 }
 
 /**
- * operator==
+ * Returns true if the two Graphs are the same 
  */
 bool Graph::operator==(const Graph & other) const {
     if (adjList.size() != other.adjList.size()) {
@@ -66,15 +66,20 @@ bool Graph::operator==(const Graph & other) const {
     return true;
 }
 
+/**
+ * Creates a node and initializes a vector of adjacencies for it 
+ */
 void Graph::insertNode(int id) {
     //note that if a node already exists nothing will change
     adjList.insert({id, vector<Edge>(0)});
 }
 
+/**
+ * Inserts an edge with a specified origin and end Node
+ * Creates the node if it does not already exist
+ * Also initalizes a random weight for the Edge
+ */
 void Graph::insertEdge(Node src, Node dest) {
-    //TODO: Check if edge already exists or if node src doesn't exist
-
-    //.at throws exception if node(src) doesn't exist
     vector<Edge> edgeList = adjList.at(src);
     for (auto e : edgeList) {
         if (e.citee  == dest) {
@@ -94,7 +99,11 @@ void Graph::insertEdge(Node src, Node dest) {
 
     adjList.at(src).push_back(edge);
 }
-
+/**
+ * Inserts an edge with a specified origin and end Node
+ * Creates the node if it does not already exist
+ * Also sets the specified weight of the Edge
+ */
 void Graph::insertEdge(Node src, Node dest, double weight) {
     //TODO: Check if edge already exists or if node src doesn't exist
 
@@ -114,6 +123,10 @@ void Graph::insertEdge(Node src, Node dest, double weight) {
     adjList.at(src).push_back(edge);
 }
 
+/**
+ * Finds all Nodes that the specified source is connected to
+ * Returns vector with all of the adjacent Nodes
+ */
 vector<int> Graph::incidentEdges(Node src) const {
     vector<Node> toReturn;
     vector<Edge> toLoop = adjList.at(src);
@@ -124,6 +137,9 @@ vector<int> Graph::incidentEdges(Node src) const {
     return toReturn;
 }
 
+/**
+ * Returns true if there is an Edge between the source and destination
+ */
 bool Graph::areAdjacent(Node src, Node dest) {
     //.at throws exception if node(src) doesn't exist
     vector<Edge> edgeList = adjList.at(src);
@@ -136,6 +152,11 @@ bool Graph::areAdjacent(Node src, Node dest) {
     return false;
 }
 
+/**
+ * Creates a subgraph starting at the specified Node
+ * Finds all neighbors and neighbors of neighbors until there are no unvisited Nodes
+ * Returns the smaller Graph
+ */
 Graph Graph::subgraph(Node start) {
     Graph g;
 
@@ -161,6 +182,9 @@ Graph Graph::subgraph(Node start) {
     return g;
 }
 
+/**
+ * Prints the graph by printing to the console each Node and the Nodes it connects to
+ */
 void Graph::printGraph() {
     for (auto it = adjList.begin(); it != adjList.end(); ++it) {
         cout << "Edges at node " << it -> first << endl;
@@ -172,6 +196,10 @@ void Graph::printGraph() {
     }
 }
 
+/**
+ * Helper function for Istream operator 
+ * Takes a line of the data and stores it in the Graph as an edge
+ */
 void addEdgeFromLine(string current, Graph &graph) {
     string delimiter = " ";
     int from;
@@ -198,6 +226,10 @@ void addEdgeFromLine(string current, Graph &graph) {
     graph.s.insert(from);
 }
 
+/**
+ * Overloaded istream operator
+ * Reads in a graph from a specified input file 
+ */
 istream &operator>>(istream  &input, Graph &graph) {
     string current;
     getline(input, current);
@@ -214,11 +246,12 @@ istream &operator>>(istream  &input, Graph &graph) {
     return input;
 }
 
+/**
+ * Returns the number of nodes in the graph
+ */
 int Graph::getNumNodes() {
     return adjList.size();
 }
-
-
 
 /* Breadth First Search implementation
  * Heavily inspired by Brandes Algorithm for betweenness centrality
@@ -259,15 +292,6 @@ map<int, vector<int> > Graph::breadthSearch(Node starting_point) {
         }
     }
 
-    // cout << "previous " << endl;
-    // for(auto i: previous) {
-    //     cout << i.first << ": ";
-    //     // cout << i.second;
-    //     for (auto j: i.second) {
-    //         cout << j << " ";
-    //     }
-    //     cout << endl;
-    // }
     for(auto node: dist) {
         //if node never visited or node is start, do nothing
     
@@ -303,6 +327,10 @@ map<int, vector<int> > Graph::breadthSearch(Node starting_point) {
     return paths;
 }
 
+/**
+ * Used to shorten the Betweenness function
+ * Takes in the stack of Nodes and the source and updates the Nodes connections
+ */
 void Graph::BFSBetweennessHelper(Node src, stack<int>& stack, map<Node, int>& sigma, map<int, vector<int>>& previous) {
     //map from node to distance from starting node. Unvisited / start node = -1. Adjacent node = 0 distance
     map<int, int> dist;
@@ -334,8 +362,10 @@ void Graph::BFSBetweennessHelper(Node src, stack<int>& stack, map<Node, int>& si
     }
 }
 
-//calculates the betweennessCentrality of every node in graph
-//taken from https://www.cl.cam.ac.uk/teaching/1718/MLRD/handbook/brandes.html
+/**
+ * calculates the betweennessCentrality of every node in graph
+ * taken from https://www.cl.cam.ac.uk/teaching/1718/MLRD/handbook/brandes.html
+ */
 map<int, double> Graph::betweennessCentrality() {
     map<Node, double> betweenness;
     map<Node, double> delta;
@@ -380,7 +410,11 @@ map<int, double> Graph::betweennessCentrality() {
     return betweenness;
 }
 
-
+/**
+ * Calculates the weight of each path from the starting_point to its connected Nodes
+ * Uses Dijkstra's Algorithm to determine the lowest weighted path from each Node
+ * Returns the connected nodes and the loweest weight for each path
+ */
 map<int, double> Graph::dijkstraSearch(Node starting_point) {
     priority_queue<pair<int,double>, vector <pair<int, double>>, greater<pair<int, double>>> pq;
     double INF = std::numeric_limits<double>::infinity();
