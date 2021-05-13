@@ -6,12 +6,17 @@
 
 ## Table of Contents 
 - [Documentation](#documentation)
+- [Dataset](#dataset)
 - [Installation](#installation)
 - [Building and Testing](#building)
 - [Features](#features)
 
 ## Documentation
 All documentation outlining our project development and results can be found in the [development](https://github-dev.cs.illinois.edu/cs225-sp21/taran4-mpara3-manasa3-anakind2/tree/master/development) folder
+
+## Dataset
+Our dataset is the [Patent Citation Network](https://snap.stanford.edu/data/cit-Patents.html)
+
 ## Installation
 To setup our project, clone the repository locally using the command
 <br>
