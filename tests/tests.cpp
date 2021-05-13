@@ -446,8 +446,25 @@ TEST_CASE("Basic Betweenness 2", "[betweenness]") {
     REQUIRE(betweenness.at(3) == 3);
 }
 
+TEST_CASE("Disconnected Betweenness", "[betweenness]") {
+    Graph g = disconnectedFromConstructor();
 
-TEST_CASE("Dijikstras Algorithm Simple", "[dijikstras]") {
+    map<Node, double> betweenness = g.betweennessCentrality();
+
+    REQUIRE(betweenness.at(1) == 0);
+    REQUIRE(betweenness.at(2) == 2);
+    REQUIRE(betweenness.at(3) == 0);
+    REQUIRE(betweenness.at(4) == 0);
+    REQUIRE(betweenness.at(5) == 0);
+    REQUIRE(betweenness.at(6) == 0);
+    REQUIRE(betweenness.at(7) == 0);
+    REQUIRE(betweenness.at(8) == 0);
+    REQUIRE(betweenness.at(9) == 0);
+=======
+    REQUIRE(true);
+}
+
+TEST_CASE("Basic Dijkstra's Algorithm", "[dijkstra]") {
     Graph g;
     g.insertNode(1);
     g.insertNode(2);
@@ -461,5 +478,6 @@ TEST_CASE("Dijikstras Algorithm Simple", "[dijikstras]") {
     REQUIRE(m[1] == 0.0);
     REQUIRE(m[2] == 1.0);
     REQUIRE(m[3] == 3.0);
+
 
 }
