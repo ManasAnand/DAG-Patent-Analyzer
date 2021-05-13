@@ -38,7 +38,7 @@ Graph simpleFromConstructor() {
 }
 
 /**
- *Building graph from disconnected_graph.jpeg using normal constructor and insert functions
+ * Building graph from disconnected_graph.jpeg using normal constructor and insert functions
  */
 Graph disconnectedFromConstructor() {
     Graph graph;
@@ -63,7 +63,7 @@ Graph disconnectedFromConstructor() {
 }
 
 /** 
- * Equality test cases
+ * Equality test cases with probably redundant statements
  */
 TEST_CASE("Empty equality", "[unit_tests]") {
     Graph g1, g2;
@@ -162,7 +162,7 @@ TEST_CASE("Basic inequality 3", "[unit_tests]") {
 }
 
 /** 
- * Testing that building graph from file vs from manually inserting nodes/edges works and is consistent
+ * Text file constructor tests
  */
 TEST_CASE("simple_graph constructor equality", "[unit_tests]") {
     Graph g1 = simpleFromConstructor();
@@ -212,35 +212,77 @@ TEST_CASE("disconnected_graph constructor inequality", "[unit_tests]") {
     REQUIRE(!(g2 == g1));
 }
 
-// TEST_CASE("Test Traversal", "[bfs]") {
-//     Graph g;
-//     g.insertNode(1);
-//     g.insertNode(2);
-//     g.insertNode(3);
-//     g.insertNode(4);
+/**
+ * Traversal test cases
+ */
+TEST_CASE("Basic Traversal 1", "[bfs]") {
+    Graph g;
+    g.insertNode(1);
 
-//     g.insertEdge(1,2);
-//     g.insertEdge(2,4);
-//     g.insertEdge(1,3);
+    map<int, vector<int>> traversal = g.breadthSearch(1);
 
-//     map<int, vector<int>> traversal = g.breadthSearch(1);
-//     map<int, vector<int>> expected; 
-// }
+    vector<int> expected;
+    expected.push_back(1);
+
+    REQUIRE(traversal.at(1) == expected);
+
+    for (int i = 2; i < 10; i++) {
+        g.insertNode(i);
+        g.insertEdge(i - 1, i);
+        traversal = g.breadthSearch(1);
+        expected.push_back(i);
+        REQUIRE(traversal.at(i) == expected);
+    }
+}
 
 TEST_CASE("Simple Traversal", "[bfs]") {
     Graph g = simpleFromConstructor();
 
     map<int, vector<int>> traversal = g.breadthSearch(1);
 
-    vector<int> oneToFive{ 5 };
+    vector<int> oneToFive{ 1, 5 };
     REQUIRE(traversal.at(5) == oneToFive);
 
-    vector<int> oneToTen{ 2, 3, 10 };
+    vector<int> oneToTen{ 1, 2, 3, 10 };
     REQUIRE(traversal.at(10) == oneToTen);
 
     REQUIRE(traversal.find(8) == traversal.end());
     REQUIRE(traversal.find(9) == traversal.end());
-    REQUIRE(traversal.find(1) == traversal.end());
+}
+
+TEST_CASE("Disconnected Traversal 1", "[bfs]") {
+    Graph g = disconnectedFromConstructor();
+
+    map<int, vector<int>> traversal = g.breadthSearch(1);
+
+    vector<int> oneToFive{ 1, 2, 5 };
+    REQUIRE(traversal.at(5) == oneToFive);
+
+    vector<int> oneToThree{ 1, 2, 3 };
+    REQUIRE(traversal.at(3) == oneToThree);
+
+    vector<int> oneToFour{ 1, 4 };
+    REQUIRE(traversal.at(4) == oneToFour);
+
+    vector<int> one{ 1 };
+    REQUIRE(traversal.at(1) == one);
+}
+
+TEST_CASE("Disconnected Traversal 2", "[bfs]") {
+    Graph g = disconnectedFromConstructor();
+
+    map<int, vector<int>> traversal = g.breadthSearch(6);
+
+    vector<int> sixToEight{ 6, 8 };
+    REQUIRE(traversal.at(8) == sixToEight);
+
+    vector<int> sixToSeven{ 6, 7 };
+    REQUIRE(traversal.at(7) == sixToSeven);
+
+    traversal = g.breadthSearch(7);
+
+    vector<int>sevenToEight{ 7, 8 };
+    REQUIRE(traversal.at(8) == sevenToEight);
 }
 
 /**
@@ -370,14 +412,52 @@ TEST_CASE("Disconnected Subgraph 2", "[subgraph]") {
     REQUIRE(expected == subgraph);
 }
 
-TEST_CASE("Disconnected Betweenness Centrality 1", "[betweenness]") {
-    Graph subgraph = simpleFromConstructor();
+/**
+ * Betweenness Centrality tests
+ */
+TEST_CASE("Basic Betweenness 1", "[betweenness]") {
+    Graph g;
+    g.insertNode(1);
+    g.insertNode(2);
+    g.insertEdge(1, 2);
 
-    map<Node, double> betweenness = subgraph.betweennessCentrality();
+    map<Node, double> betweenness = g.betweennessCentrality();
 
-    for (auto const& x : betweenness) {
-        cout << x.first << ": " << x.second << endl;
-    }
+    REQUIRE(betweenness.at(1) == 0);
+    REQUIRE(betweenness.at(2) == 0);
+}
 
-    REQUIRE(true);
+TEST_CASE("Basic Betweenness 2", "[betweenness]") {
+    Graph g;
+    g.insertNode(1);
+    g.insertNode(2);
+    g.insertNode(3);
+    g.insertNode(4);
+    g.insertNode(5);
+    g.insertEdge(1, 2);
+    g.insertEdge(1, 5);
+    g.insertEdge(2, 3);
+    g.insertEdge(3, 4);
+    g.insertEdge(4, 5);
+
+    map<Node, double> betweenness = g.betweennessCentrality();
+
+    REQUIRE(betweenness.at(2) == 2);
+    REQUIRE(betweenness.at(3) == 3);
+}
+
+TEST_CASE("Disconnected Betweenness", "[betweenness]") {
+    Graph g = disconnectedFromConstructor();
+
+    map<Node, double> betweenness = g.betweennessCentrality();
+
+    REQUIRE(betweenness.at(1) == 0);
+    REQUIRE(betweenness.at(2) == 2);
+    REQUIRE(betweenness.at(3) == 0);
+    REQUIRE(betweenness.at(4) == 0);
+    REQUIRE(betweenness.at(5) == 0);
+    REQUIRE(betweenness.at(6) == 0);
+    REQUIRE(betweenness.at(7) == 0);
+    REQUIRE(betweenness.at(8) == 0);
+    REQUIRE(betweenness.at(9) == 0);
 }

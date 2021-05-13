@@ -27,7 +27,7 @@ Graph::Graph() {
  */
 bool Graph::operator==(const Graph & other) const {
     if (adjList.size() != other.adjList.size()) {
-        cout << "different number of nodes" << endl;
+        //cout << "different number of nodes" << endl;
         return false;
     }
 
@@ -36,7 +36,7 @@ bool Graph::operator==(const Graph & other) const {
 
         //if node in other isn't in this, return false
         if (adjList.find(otherPair.first) == adjList.end()) {
-            cout << "different nodes" << endl;
+            //cout << "different nodes" << endl;
             return false;
         }
 
@@ -45,7 +45,7 @@ bool Graph::operator==(const Graph & other) const {
 
         // if different number of edges at that node, return false
         if (currentList.size() != otherPair.second.size()) { 
-            cout << "different number of edges" << endl;
+            //cout << "different number of edges" << endl;
             return false;
         }
 
@@ -57,7 +57,7 @@ bool Graph::operator==(const Graph & other) const {
             const bool otherInCurrent = (std::find(currentList.begin(), currentList.end(), otherEdge) != currentList.end());
             const bool currentInOther = (std::find(otherPair.second.begin(), otherPair.second.end(), currentEdge) != otherPair.second.end());
             if (!otherInCurrent || !currentInOther) {
-                cout << "edge in one list isn't in the other" << endl;
+                //cout << "edge in one list isn't in the other" << endl;
                 return false;
             }
         }
@@ -204,6 +204,9 @@ map<int, vector<int> > Graph::breadthSearch(Node starting_point) {
     //map from node to nodes that lead to that node
     map<int, vector<int> > previous;
     map<int, vector<int> > paths;
+    vector<int> start{ starting_point };
+    paths.insert({starting_point, start});
+
     //map from node to distance from starting node. Unvisited / start node = -1. Adjacent node = 0 distance
     map<int, int> dist;
     for(auto node: adjList) {
@@ -266,7 +269,9 @@ map<int, vector<int> > Graph::breadthSearch(Node starting_point) {
                 }
             }
         }
-        
+
+        //path should start with starting point
+        toAdd.push_back(starting_point);
         std::reverse(toAdd.begin(), toAdd.end());
         paths.insert({node.first, toAdd});
     }
@@ -317,11 +322,15 @@ map<int, double> Graph::betweennessCentrality() {
     for (auto nodePair : adjList) {
         Node node = nodePair.first;
 
-        //reset sigma, delta, betweeenness
+        //reset sigma, delta, betweenness
         map<Node, int> sigma = { {node, 1} };
         delta.clear();
         previous.clear();
-        betweenness[1] = 0;
+        previous[node] = vector<int>();
+        //if node has never been initialized, initialize it's betweenness to 0
+        if (betweenness.find(node) == betweenness.end()) {
+            betweenness[node] = 0;
+        }
 
         //Step 2.2 BFSBetweennessHelper stuff
         BFSBetweennessHelper(node, s, sigma, previous);
@@ -331,18 +340,16 @@ map<int, double> Graph::betweennessCentrality() {
             Node current = s.top();
             s.pop();
 
-            //need this check because previous does not contain current
-            if (current != node) {
-                for (vector<int>::const_iterator it = previous.at(current).begin(); it != previous.at(current).end(); ++it) {
-                    //previous.at(current) = vector<Node>
-                    int v = *it;
-                    delta[v] = delta[v] + ( ( double(sigma[v]) / double( sigma[current]) ) * (1 + delta[current]) );
+            for (vector<int>::const_iterator it = previous.at(current).begin(); it != previous.at(current).end(); ++it) {
+                //previous.at(current) = vector<Node>
+                int v = *it;
+                delta[v] = delta[v] + ( ( double(sigma[v]) / double( sigma[current]) ) * (1 + delta[current]) );
 
-                    if (current != node) {
-                        betweenness[current] = betweenness[current] + delta[current];
-                    }
+                if (current != node) {
+                    betweenness[current] = betweenness[current] + delta[current];
                 }
             }
+
         }
     }
 
