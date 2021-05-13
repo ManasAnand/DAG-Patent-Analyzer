@@ -460,8 +460,6 @@ TEST_CASE("Disconnected Betweenness", "[betweenness]") {
     REQUIRE(betweenness.at(7) == 0);
     REQUIRE(betweenness.at(8) == 0);
     REQUIRE(betweenness.at(9) == 0);
-=======
-    REQUIRE(true);
 }
 
 TEST_CASE("Basic Dijkstra's Algorithm", "[dijkstra]") {
@@ -469,9 +467,9 @@ TEST_CASE("Basic Dijkstra's Algorithm", "[dijkstra]") {
     g.insertNode(1);
     g.insertNode(2);
     g.insertNode(3);    
-    g.insertEdge(1,2, 1.0);
-    g.insertEdge(2,3, 7.3);
-    g.insertEdge(1,3, 3.2);
+    g.insertEdge(1, 2, 1.0);
+    g.insertEdge(2, 3, 7.3);
+    g.insertEdge(1, 3, 3.2);
 
     map<int, double> m = g.dijkstraSearch(1);
 
