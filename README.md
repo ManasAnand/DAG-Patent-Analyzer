@@ -28,7 +28,7 @@ Our targetted dataset is the [Patent Citation Network](https://snap.stanford.edu
 In order to run our tests suites, users must be running on EWS and execute the ``module load llvm/6.0.1`` command on their terminal then run ``make`` to compile. <br> 
 Afterwards, execute ``make test && ./tests`` in order to run our test cases (our cases can be found [here](https://github-dev.cs.illinois.edu/cs225-sp21/taran4-mpara3-manasa3-anakind2/tree/master/tests))
 
-To execute a sample of our dataset, run ``./main tests/simple_graph.txt 1``. (further tests can be found in ``main.cpp``) This command locates the graph data to use where 1 is the node in the graph data we want to use to generate the dijkstra's and betweenness data
+To execute a sample of our dataset, run ``./main tests/simple_graph.txt 1``. (further tests can be found in ``main.cpp``) This command locates the graph data to use where 1 is the node in the graph data we want to use to generate the dijkstra's and betweenness data. To run the function on the entire dataset, the user can run ``./main tests/cit-Patents.txt XXX`` where XXX is the desired patent number to create a subgraph for. 
 
 
 ## Features
