@@ -1,8 +1,5 @@
-# taran4-mpara3-manasa3-anakind2
-# Final Project
-
-
-## [Video Presentation of Our Project](https://illinois.zoom.us/rec/play/OAFWXHu18PL73ML8iJlzTJVZ0MLFcK6fN20XttL-irCl-XgbM4ri0HhWzqKS9vuVX9R29bMUs0Wxbc_A.OOK8GRn7-vxTjNc_?startTime=1620874366000&_x_zm_rtaid=0jP6GesiRJ6rAaSGDbVq1A.1620873100573.2965a7a7305d0eef1dda061cc77d4ac1&_x_zm_rhtaid=435)
+# 
+# Directed Acyclic Graph of US Patents and Algorithms to Analyze.
 
 ## Table of Contents 
 - [Documentation](#documentation)
