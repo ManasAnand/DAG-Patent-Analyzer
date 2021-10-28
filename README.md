@@ -14,7 +14,7 @@ All documentation outlining our project development and results can be found in 
 ## Installation
 To setup our project, clone the repository locally using the command
 <br>
-`` git clone https://github-dev.cs.illinois.edu/cs225-sp21/taran4-mpara3-manasa3-anakind2.git``
+`` git clone https://github.com/ManasAnand/DAG-Patent-Analyzer.git``
 <br>
 then ``cd`` to the directory in order to use the commands for executing our cases as covered in the next section
 
